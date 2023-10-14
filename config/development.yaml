@@ -1,0 +1,87 @@
+## Server Configuration
+SERVER_NAME: "Base Service"
+SERVER_IP: "127.0.0.1"
+SERVER_PORT: "8000"
+SERVER_STORE_PATH: "./config/stores"
+SERVER_UPLOAD_PATH: "./config/uploads"
+SERVER_UPLOAD_LIMIT: 8
+SERVER_LOG_LEVEL: "debug"
+# ----------------------------------------------
+
+## Router Configuration
+ROUTER_BASE_PATH: ""
+
+# ----------------------------------------------
+## Cryptography Configuration
+CRYPT_PRIVATE_KEY_FILE: "./config/keys/private.key"
+CRYPT_PUBLIC_KEY_FILE: "./config/keys/public.key"
+# ----------------------------------------------
+
+## Database Configuration
+DB_DRIVER: "postgres"
+DB_HOST: "127.0.0.1"
+DB_PORT: "5432"
+DB_USER: "postgres"
+DB_PASSWORD: "password"
+DB_NAME: "sample"
+# ----------------------------------------------
+
+## Log Configuration
+# LOG_OUTPUT : "./test.log"   # Default log into console and this is absoulute path
+LOG_FORMAT : "json"         # Default log format is text and have color
+# ----------------------------------------------
+
+## RSA Algorithm JWT: RSA256 or HS256 supported
+# JWT_ALGORITHM: "RSA256"          # Default JWT Algorithm : RSA, Now Supported HS256
+# JWT_ALGORITHM: "HS256"          
+HS_SECRET_KEY: "AMillionDolars2026" # Use for sign with HS256 
+JWT_EXPIRATION_TIME_HOURS: 360
+# ----------------------------------------------
+
+## Cache Configuration : Default false
+ENABLE_CACHE_API: true
+## Remote Cache Redis Configuration
+REMOTE_CACHE_DRIVER: "redis"
+REMOTE_CACHE_HOST: "127.0.0.1"
+REMOTE_CACHE_PORT: "6379"
+REMOTE_CACHE_PASSWORD: "" # Default, Connect With Local
+REMOTE_CACHE_NAME: 0      # Default, Connect With Local
+# ----------------------------------------------
+
+## Rate Limit Configuration 
+# Rate Limit For All Request With Router
+REQUEST_PER_SECOND: 50
+REQUEST_BURST: 100
+
+# Rate Limit By IP
+REQUEST_MAX: 5
+DURATIONS_SECOND: 10
+
+# Duration 
+DURATION_BLOCK_HOURS: 1
+# ----------------------------------------------
+
+## Elastic Search Configuration
+# Enable Elastic
+ENABLE_ELASTIC_SEARCH: true # Default False
+ES_HOST: "127.0.0.1"
+ES_PORT: "9200"
+ES_USER: ""
+ES_PASSWORD: ""
+ES_SAMPLE_INDEX: "sample"
+
+# ----------------------------------------------
+## Kafka Configuration
+BROKER_ADDRESS: "127.0.0.1:9092"
+TOPIC_SAMPLE: "message"
+CONSUMER_GROUP_SAMPLE: "search-service"
+
+# ----------------------------------------------
+## AWS S3 Configuration
+# STORAGE_USE_SSL: ""
+# STORAGE_ENDPOINT: ""
+# STORAGE_ACCESS_KEY: ""
+# STORAGE_SECRET_KEY: ""
+# STORAGE_REGION: ""
+# STORAGE_BUCKET: ""
+# ----------------------------------------------
