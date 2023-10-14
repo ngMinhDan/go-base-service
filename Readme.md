@@ -20,7 +20,7 @@ A fast codebase for building a service to serve HTTP requests. Built with love b
 - Support admin functions: Get all users, Block IP, Upgrade role, Rate Limit
 - Support sending messages to Kafka brokers and consuming these messages,then inserting them into Elasticsearch
 - Support full-text search using Elasticsearch's API
-You can import this API collection into Postman as a JSON file using this [Link](https://api.postman.com/collections/16710906-40cf1cd5-3a8c-4b6c-9558-f683b76fff12?access_key=PMAT-01HCQNVVF8PA1JWGAKM6AJF3EF)
+You can import this API collection into Postman as a JSON file using this postman.json file
 
 ![Image](https://res.cloudinary.com/dtmebo99b/image/upload/v1697304940/github/base_yrbzf0.png)
 ## How to Run
