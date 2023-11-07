@@ -2,11 +2,11 @@ package controller
 
 import (
 	"base/pkg/constant"
-	"base/pkg/db"
 	"base/pkg/log"
 	"base/pkg/middle"
 	"base/pkg/router"
 	"base/service/users/model"
+	"base/service/users/repository"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -35,30 +35,13 @@ func GetAllProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get List All Of User's Info
-	query := "SELECT id, username, email, profile_picture_url, role, is_active, created_at, updated_at FROM users"
-	rows, err := db.PSQL.Query(query)
-
+	users, err := repository.GetAllProfiles()
 	if err != nil {
-		log.Println(log.LogLevelError, "query-get-all-users", err.Error())
+		log.Println(log.LogLevelError, "get-all-profiles", err.Error())
 		router.ResponseInternalError(w, constant.QueryDatabaseFail, err.Error())
 		return
 	}
-	// Iterate through the result rows and scan into User objects
-	var users []model.User
-	for rows.Next() {
-		var user model.User
 
-		err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.ProfilePictureURL, &user.Role,
-			&user.IsActive, &user.CreatedAt, &user.UpdatedAt)
-
-		if err != nil {
-			log.Println(log.LogLevelError, "scan-row-to-user", err.Error())
-			router.ResponseInternalError(w, constant.ScanDatabaseToObject, err.Error())
-			return
-		}
-		users = append(users, user)
-	}
 	router.ResponseSuccessWithData(w, "", "", users)
 	return
 }
