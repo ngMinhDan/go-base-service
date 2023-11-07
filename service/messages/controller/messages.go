@@ -2,11 +2,11 @@ package controller
 
 import (
 	"base/pkg/constant"
-	"base/pkg/db"
 	"base/pkg/log"
 	"base/pkg/router"
 	"base/pkg/utils"
 	"base/service/messages/model"
+	"base/service/messages/repository"
 	"encoding/json"
 	"net/http"
 )
@@ -46,29 +46,13 @@ func CreateMessage(w http.ResponseWriter, r *http.Request) {
 // GetAllMessage: Get All Message
 func GetAllMessages(w http.ResponseWriter, r *http.Request) {
 
-	// Get List All Of User's Info
-	query := "SELECT id, content, created_at FROM messages"
-	rows, err := db.PSQL.Query(query)
-
+	messages, err := repository.GetAllMessages()
 	if err != nil {
-		log.Println(log.LogLevelError, "query-get-all-messages", err.Error())
+		log.Println(log.LogLevelError, "get-all-messages-fail", err.Error())
 		router.ResponseInternalError(w, constant.QueryDatabaseFail, err.Error())
 		return
 	}
-	// Iterate through the result rows and scan into User objects
-	var messages []model.Message
-	for rows.Next() {
-		var mess model.Message
-
-		err := rows.Scan(&mess.ID, &mess.Content, &mess.CreatedAt)
-
-		if err != nil {
-			log.Println(log.LogLevelError, "scan-row-to-messages", err.Error())
-			router.ResponseInternalError(w, constant.ScanDatabaseToObject, err.Error())
-			return
-		}
-		messages = append(messages, mess)
-	}
 	router.ResponseSuccessWithData(w, "", "", messages)
+
 	return
 }
