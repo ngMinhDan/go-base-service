@@ -3,7 +3,6 @@ package model
 import (
 	"base/pkg/db"
 	"errors"
-	"fmt"
 )
 
 //
@@ -38,37 +37,34 @@ func (user User) CreateNewUser() error {
 
 // Update Password
 func (user User) UpdatePassword(newPassword string) error {
-	query := fmt.Sprintf("Update users SET password = '%s', updated_at = now() WHERE id = '%d'", newPassword, user.ID)
-	_, err := db.PSQL.Query(query)
+	query := `UPDARE users SET password = $1, updated_at = now() WHERE id = $2 RETURNING id`
+	err := db.PSQL.QueryRow(query, newPassword, user.ID).Scan(&user.ID)
 	return err
 }
 
 // Update Role User
 func (user User) UpdateRole(role string) error {
-	query := fmt.Sprintf("Update users SET role = '%s', updated_at = now() WHERE id = '%d'", role, user.ID)
-	_, err := db.PSQL.Query(query)
+	query := `UPDATE users SET role = $1, updated_at = now() WHERE id = $2 RETURNING id`
+	err := db.PSQL.QueryRow(query, role, user.ID).Scan(&user.ID)
 	return err
 }
 
 // Update Profile : Username or Avatar
 func (user User) UpdateProfile(username, avatar string) error {
 	if username != "" && avatar != "" {
-		query := fmt.Sprintf("Update users SET username = '%s', profile_picture_url = '%s', updated_at = now() WHERE id = '%d'",
-			username, avatar, user.ID)
-		_, err := db.PSQL.Query(query)
+		query := `UPDATE users SET username = $1, profile_picture_url = $2, updated_at = now() WHERE id = $3 RETURNING id`
+		err := db.PSQL.QueryRow(query, username, avatar, user.ID).Scan(&user.ID)
 		return err
 	}
 	if username != "" {
-		query := fmt.Sprintf("Update users SET username = '%s', updated_at = now() WHERE id = '%d'",
-			username, user.ID)
-		_, err := db.PSQL.Query(query)
+		query := `UPDATE users SET username = $1, updated_at = now() WHERE id = $2 RETURNING id`
+		err := db.PSQL.QueryRow(query, username, user.ID).Scan(&user.ID)
 		return err
 	}
 	if avatar != "" {
-		query := fmt.Sprintf("Update users SET avatar = '%s', updated_at = now() WHERE id = '%d'",
-			avatar, user.ID)
-		_, err := db.PSQL.Query(query)
+		query := `UPDATE users SET avatar = $1, updated_at = now() WHERE id = $2 RETURNING id`
+		err := db.PSQL.QueryRow(query, avatar, user.ID).Scan(&user.ID)
 		return err
 	}
-	return errors.New("UpdateProfile Wrong !")
+	return errors.New("UpdateProfile Query Wrong !")
 }
